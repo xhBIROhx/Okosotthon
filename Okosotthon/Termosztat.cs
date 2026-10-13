@@ -4,16 +4,32 @@ using System.Text;
 
 namespace Okosotthon
 {
-    public class Termosztat : OkosEszkoz
+    public class Termosztat : OkosEszkoz, IIdozitheto, IStatisztika
     {
         public double JelenlegiHomerseklet { get; private set; }
         public double CelHomerseklet { get; private set; }
+        private int _hatralevoIdo;
 
         public Termosztat(string azonosito, string nev, double celHomerseklet)
         : base(azonosito, nev)
         {
             this.CelHomerseklet = celHomerseklet;
             this.JelenlegiHomerseklet = 21.0;
+        }
+
+        public void IdozitestBeallit(int perc)
+        {
+            _hatralevoIdo = perc;
+        }
+
+        public int GetMaradtIdo()
+        {
+            return _hatralevoIdo;
+        }
+
+        public string StatisztikatKeszit()
+        {
+            return $"Termosztát statisztika: Jelenlegi {JelenlegiHomerseklet}°C, Cél: {CelHomerseklet}°C";
         }
 
         public override void ParancsVegrehajtasa(string parancs)

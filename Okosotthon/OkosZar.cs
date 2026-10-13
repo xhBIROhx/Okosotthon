@@ -4,16 +4,32 @@ using System.Text;
 
 namespace Okosotthon
 {
-    public class OkosZar: OkosEszkoz
+    public class OkosZar: OkosEszkoz, IHangjelzo, IStatisztika
     {
         private string pinKod;
         public bool ZartE { get; private set; }
+        private int _sikertelenNyitasok;
 
         public OkosZar(string azonosito, string nev, string pinKod)
         : base(azonosito, nev)
         {
             this.pinKod = pinKod;
             this.ZartE = true;
+        }
+
+        public void Csipog(int hosszu)
+        {
+            Console.WriteLine($"Csipogás: {hosszu} ms");
+        }
+
+        public void VeszjelzesInditasa()
+        {
+            Console.WriteLine("VÉSZJELZÉS INDÍTVA!");
+        }
+
+        public string StatisztikatKeszit()
+        {
+            return $"OkosZár statisztika: Sikertelen nyitási kísérletek: {_sikertelenNyitasok}";
         }
 
         public override void ParancsVegrehajtasa(string parancs)
@@ -27,6 +43,15 @@ namespace Okosotthon
                     if (megadottPinKod == this.pinKod)
                     {
                         this.ZartE = false;
+                    }
+                    else
+                    {
+                        _sikertelenNyitasok++;
+                        Csipog(500);
+                        if (_sikertelenNyitasok >= 3)
+                        {
+                            VeszjelzesInditasa();
+                        }
                     }
                 }
             }

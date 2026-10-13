@@ -34,5 +34,26 @@ namespace Okosotthon
             return sikeres;
         }
 
+        public void OsszesHangjelzoAktivasa()
+        {
+            foreach (var eszkoz in eszkozok)
+            {
+                if (eszkoz is IHangjelzo h)
+                {
+                    h.VeszjelzesInditasa();
+                }
+            }
+        }
+
+        public void StatisztikakLekerdezese()
+        {
+            foreach (var eszkoz in eszkozok)
+            {
+                if (eszkoz is IStatisztika s)
+                {
+                    Console.WriteLine(s.StatisztikatKeszit());
+                }
+            }
+        }
     }
 }
